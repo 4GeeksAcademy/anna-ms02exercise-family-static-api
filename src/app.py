@@ -40,13 +40,28 @@ def handle_get_member(member_id):
     member = jackson_family.get_member(member_id)
     return jsonify (member), 200
 
+
+
 @app.route('/member', methods=['POST'])
-def handle_post_member():
-    request_body = request.json
-    membres.append(request_body)
-    return jsonify(membres)
+def handle_post ():
+    data = request.json
+    print (data)
+    jackson_family.add_member(data)
+    return jsonify(), 200
+
+
+# def handle_post_member():   ////VALIDO TAMBIÉN
+#     request_body = request.json
+#     jackson_family.add_member(request_body)
+#     return jsonify (), 200
            
 
+@app.route('/member/int:member_id', methods=['DELETE'])
+def handle_delete(member_id):
+    jackson_family.delete_member(member_id)
+    return jsonify({"body": {
+        "done": True
+    }}), 200
 
 
 
@@ -101,7 +116,7 @@ if __name__ == '__main__':
 #     print(f"Attempting to delete member with ID: {member_id}")  # Debugging line
 #     member = jackson_family.get_member(member_id)
 #     if member:
-#         print(f"Member found: {member}")  # Debugging line
+#         print("Member found: {member}")  # Debugging line
 #         jackson_family.delete_member(member_id)
 #         return jsonify({"done": True}), 200
 #     else:
